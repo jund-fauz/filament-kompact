@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "be2b79644a77265208bbc5901f628f02",
+    "content-hash": "49d1a5a45e3b6cdbd18741bce4949694",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2181,16 +2181,16 @@
         },
         {
             "name": "jund-fauz/eloquent-kompact",
-            "version": "v0.99.0",
+            "version": "v0.100.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jund-fauz/eloquent-kompact.git",
-                "reference": "57d9e42ff01a32cafa21a14971bd40735b0a7f21"
+                "reference": "79c99d12ec71f21f2a66ec0bf34371650814376c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jund-fauz/eloquent-kompact/zipball/57d9e42ff01a32cafa21a14971bd40735b0a7f21",
-                "reference": "57d9e42ff01a32cafa21a14971bd40735b0a7f21",
+                "url": "https://api.github.com/repos/jund-fauz/eloquent-kompact/zipball/79c99d12ec71f21f2a66ec0bf34371650814376c",
+                "reference": "79c99d12ec71f21f2a66ec0bf34371650814376c",
                 "shasum": ""
             },
             "require": {
@@ -2234,9 +2234,9 @@
             "description": "A set of automation & helper tools to improve development experience and convenience in building app using Eloquent ORM by Laravel",
             "support": {
                 "issues": "https://github.com/jund-fauz/eloquent-kompact/issues",
-                "source": "https://github.com/jund-fauz/eloquent-kompact/tree/v0.99.0"
+                "source": "https://github.com/jund-fauz/eloquent-kompact/tree/v0.100.0"
             },
-            "time": "2026-11-07T08:11:03+00:00"
+            "time": "2026-11-09T03:52:19+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",

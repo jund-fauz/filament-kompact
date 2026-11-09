@@ -5,7 +5,10 @@ namespace JundFauz\FilamentKompact\Form;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Repeater;
 
-class RepeaterMacros extends Repeater
+/**
+ * @internal
+ */
+final class RepeaterMacros extends Repeater
 {
     public static function minOneItem(): void
     {

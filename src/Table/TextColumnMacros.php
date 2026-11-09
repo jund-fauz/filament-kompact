@@ -6,13 +6,16 @@ use Closure;
 use Filament\Tables\Columns\TextColumn;
 use JundFauz\FilamentKompact\Concerns\Trait\Formattable;
 
-class TextColumnMacros extends TextColumn
+/**
+ * @internal
+ */
+final class TextColumnMacros extends TextColumn
 {
     use Formattable;
 
     public static function formatId(): void
     {
-        TextColumn::macro(__FUNCTION__, self::idFormatter(...));
+        TextColumn::macro(__FUNCTION__, self::idFormatter());
     }
 
     public static function searchSortable(): void

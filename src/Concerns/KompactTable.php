@@ -2,7 +2,7 @@
 
 namespace JundFauz\FilamentKompact\Concerns;
 
-use Dam\FilamentKit\Components\Tables\ColumnTimestamps;
+use Closure;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
@@ -14,15 +14,17 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
-use Filament\Schemas\Components\Component;
 use Filament\Support\Enums\IconSize;
 use Filament\Tables\Columns\Column;
+use Filament\Tables\Filters\BaseFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use JundFauz\FilamentKompact\Helper\Filter;
+use JundFauz\FilamentKompact\Table\ColumnTimestamps;
+use Zvizvi\FilamentColumnFilters\Filters\ColumnFilter;
 use function JundFauz\EloquentKompact\collect;
-use function JundFauz\EloquentKompact\merge_as_array;
 use function JundFauz\EloquentKompact\not;
 
 abstract class KompactTable
@@ -31,13 +33,14 @@ abstract class KompactTable
     protected static bool $recordActionOnlyShowIcon = true;
     protected static bool $showTimestamps = true;
     protected static bool $showDeletedAt = true;
+    protected static bool $persistInSession = true;
 
     /** Configuration */
 
     /**
      * @return array<int, Column>
      */
-    public static function getColumns(): array
+    protected static function getColumns(): array
     {
         return [];
     }
@@ -45,22 +48,22 @@ abstract class KompactTable
     /**
      * @return array<int, string>
      */
-    public static function getStatsColumn(): array
+    protected static function getStatsColumn(): array
     {
         return static::$statsColumns;
     }
 
     /**
-     * @return array<int, Component>
+     * @return array<int, BaseFilter>
      */
-    public static function getFilter(): array
+    protected static function getFilters(): array
     {
         return [
             TrashedFilter::make()
         ];
     }
 
-    public static function getToggledViewAction(): bool
+    protected static function getToggledViewAction(): bool
     {
         return true;
     }
@@ -79,7 +82,7 @@ abstract class KompactTable
             ->tooltip($action->getLabel());
     }
 
-    public static function getRecordActions(): array
+    protected static function getRecordActions(): array
     {
         $actions = collect(
             EditAction::make()
@@ -106,7 +109,7 @@ abstract class KompactTable
     /**
      * @return array<int, ActionGroup>
      */
-    public static function getToolbarActions(): array
+    protected static function getToolbarActions(): array
     {
         return [
             BulkActionGroup::make([
@@ -117,23 +120,44 @@ abstract class KompactTable
         ];
     }
 
-    /** Table Creation */
-    public static function table(Table $table): Table
+    /**
+     * Per-table hook to adjust each column filter, e.g. by checking `$column->getName()`.
+     */
+    protected static function configureColumnFilter(ColumnFilter $filter, Column $column): void
+    {
+
+    }
+
+    protected static function getModifiedQuery(): Closure
+    {
+        return fn (Builder $query) => $query;
+    }
+
+    /** Table Creation, by @jund-fauz & @damar-glh */
+    protected static function table(Table $table): Table
     {
         $stats = null;
         if ($statsColumns = static::getStatsColumn()) {
-            $stats = Filter::getCount($table->getModel()::class, $statsColumns);
+            $stats = Filter::getCount($table->getModel(), $statsColumns);
         }
         $columns = collect(static::getColumns());
         if (static::$showTimestamps) {
-            $columns->push(...ColumnTimestamps::tableColumns());
+            $columns->push(...ColumnTimestamps::tableColumns(static::$showDeletedAt));
         }
-        if ($statsColumns) {
+        if ($statsColumns && class_exists(ColumnFilter::class)) {
             foreach ($columns as $column) {
                 /** @var Column $column */
-                $column->createFilter
+                Filter::createForColumn($column, $stats, customConfiguration: static::configureColumnFilter(...));
             }
         }
+
+        return $table
+            ->columns($columns->toArray())
+            ->persistInSession(static::$persistInSession)
+            ->filters(static::getFilters())
+            ->recordActions(static::getRecordActions())
+            ->toolbarActions(static::getToolbarActions())
+            ->modifyQueryUsing(static::getModifiedQuery());
     }
 
     protected static function trashed(Model $record): bool

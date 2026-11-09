@@ -17,7 +17,7 @@
     "require": {
         "php": "^8.3",
         "filament/filament": "^5.11",
-        "jund-fauz/eloquent-kompact": "^0.99.0",
+        "jund-fauz/eloquent-kompact": "^0.100.0",
         "brick/math": "^1.0"
     },
     "require-dev": {
