@@ -31,7 +31,7 @@ First release.
 
 ### Tests
 
-- Added tests for `KompactTable`, `ColumnTimestamps`, `Filter`, the macros and `Format`, and a GitHub Actions workflow on PHP 8.3–8.5 with Laravel 12 and 13.
+- Added tests for `KompactTable`, `ColumnTimestamps`, `Filter`, the macros and `Format`, and a GitHub Actions workflow on PHP 8.3–8.5 with Laravel 13.
 
 [Unreleased]: https://github.com/jund-fauz/filament-kompact/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/jund-fauz/filament-kompact/releases/tag/v0.1.0
