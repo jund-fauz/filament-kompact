@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-09
+
+### Changed
+
+- **Breaking:** requires Eloquent Kompact `^1.0` instead of `^0.100`. An app that requires Eloquent Kompact `0.x` itself has to upgrade it too, see its [changelog](https://github.com/jund-fauz/eloquent-kompact/blob/main/CHANGELOG.md#100---2026-11-09) (e.g. the `fillable.exclude_column_by` config).
+- `Filter` uses `ColumnCheck`, the new name of Eloquent Kompact's `Checker`.
+
 ## [0.1.1] - 2026-11-09
 
 ### Fixed
@@ -43,6 +50,7 @@ First release.
 
 - Added tests for `KompactTable`, `ColumnTimestamps`, `Filter`, the macros and `Format`, and a GitHub Actions workflow on PHP 8.3–8.5 with Laravel 13.
 
-[Unreleased]: https://github.com/jund-fauz/filament-kompact/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/jund-fauz/filament-kompact/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/jund-fauz/filament-kompact/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/jund-fauz/filament-kompact/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/jund-fauz/filament-kompact/releases/tag/v0.1.0
