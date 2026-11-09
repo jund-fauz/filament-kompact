@@ -97,6 +97,16 @@ class FilterTest extends TestCase
     }
 
     #[Test]
+    public function create_for_column_skips_the_column_when_the_plugin_is_not_registered(): void
+    {
+        $this->withoutColumnFilterMacro();
+
+        $column = Filter::createForColumn($this->column('brand'));
+
+        $this->assertNull(FilamentColumnFilters::getColumnFilter($column));
+    }
+
+    #[Test]
     public function create_for_column_lists_the_distinct_non_empty_values(): void
     {
         $column = Filter::createForColumn($this->column('brand'), Filter::getCount(Product::class, 'brand'));

@@ -106,6 +106,18 @@ class KompactTableTest extends TestCase
     }
 
     #[Test]
+    public function stats_columns_get_no_column_filter_when_the_plugin_is_not_registered(): void
+    {
+        $this->withoutColumnFilterMacro();
+        ProductTable::$columnStats = ['name'];
+
+        $columns = $this->table()->getColumns();
+
+        $this->assertNull(FilamentColumnFilters::getColumnFilter($columns['name']));
+        $this->assertNull(FilamentColumnFilters::getColumnFilter($columns['created_at']));
+    }
+
+    #[Test]
     public function the_record_actions_follow_the_trashed_state(): void
     {
         $record = Product::first();

@@ -55,4 +55,14 @@ class ColumnTimestampsTest extends TestCase
         $this->assertInstanceOf(DateColumnFilter::class, FilamentColumnFilters::getColumnFilter($createdAt));
         $this->assertNull(FilamentColumnFilters::getColumnFilter($updatedAt));
     }
+
+    #[Test]
+    public function created_at_has_no_column_filter_when_the_plugin_is_not_registered(): void
+    {
+        $this->withoutColumnFilterMacro();
+
+        [$createdAt] = ColumnTimestamps::tableColumns();
+
+        $this->assertNull(FilamentColumnFilters::getColumnFilter($createdAt));
+    }
 }

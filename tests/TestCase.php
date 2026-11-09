@@ -13,12 +13,14 @@ use Filament\Schemas\SchemasServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
+use Filament\Tables\Columns\Column;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use JundFauz\EloquentKompact\EloquentKompactServiceProvider;
 use JundFauz\FilamentKompact\FilamentKompactServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
+use ReflectionProperty;
 use Zvizvi\FilamentColumnFilters\FilamentColumnFilters;
 use Zvizvi\FilamentColumnFilters\FilamentColumnFiltersServiceProvider;
 
@@ -51,6 +53,17 @@ abstract class TestCase extends BaseTestCase
 
         // The column filter plugin only registers `columnFilter()` when it is added to a panel
         FilamentColumnFilters::registerColumnMacro();
+    }
+
+    /**
+     * Acts as if the column filter plugin is not registered on a panel
+     */
+    protected function withoutColumnFilterMacro(): void
+    {
+        $macros = new ReflectionProperty(Column::class, 'macros');
+        $value = $macros->getValue();
+        unset($value['columnFilter']);
+        $macros->setValue(null, $value);
     }
 
     protected function defineEnvironment($app): void

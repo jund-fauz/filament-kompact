@@ -2,6 +2,7 @@
 
 namespace JundFauz\FilamentKompact\Table;
 
+use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
 use Zvizvi\FilamentColumnFilters\Filters\ColumnFilter;
 
@@ -16,7 +17,7 @@ class ColumnTimestamps
             ->dateTime('d-m-Y, H:i')
             ->sortable()
             ->toggleable();
-        if (class_exists(ColumnFilter::class)) {
+        if (Column::hasMacro('columnFilter')) {
             $createdAtColumn->columnFilter(ColumnFilter::date());
         }
         $columns = [

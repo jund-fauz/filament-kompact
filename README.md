@@ -8,7 +8,7 @@ composer require jund-fauz/filament-kompact
 
 Requires PHP 8.3+, Laravel 13 and Filament 5. The service provider is registered through package discovery.
 
-The column filters need [`zvizvi/filament-column-filters`](https://github.com/zvizvi/filament-column-filters). It is optional: without it, columns get no filter.
+The column filters need [`zvizvi/filament-column-filters`](https://github.com/zvizvi/filament-column-filters). It is optional: without it, or while its plugin is not registered on the panel, columns get no filter.
 
 ```bash
 composer require zvizvi/filament-column-filters
@@ -122,7 +122,7 @@ $table->columns([
 ]);
 ```
 
-The columns are formatted as `d-m-Y, H:i`, sortable and toggleable. `updated_at` and `deleted_at` are hidden by default. `created_at` gets a date column filter when `zvizvi/filament-column-filters` is installed.
+The columns are formatted as `d-m-Y, H:i`, sortable and toggleable. `updated_at` and `deleted_at` are hidden by default. `created_at` gets a date column filter when the `zvizvi/filament-column-filters` plugin is registered on the panel.
 
 ## Column filters
 
@@ -188,7 +188,7 @@ Filter::resolveOptionQueryUsing(function (&$query, &$relationNames, string $colu
 | `TextEntry::formatId(string $prefix, ?int $digit = 3)` | The same, for an infolist |
 | `TextColumn::searchSortable($sortableCondition = true, $searchableCondition = true)` | `searchable()` and `sortable()` |
 | `Repeater::minOneItem()` | Starts with one item, requires at least one, and hides the delete button of the last item |
-| `Column::createFilter(?object $stats = null)` | `Filter::createForColumn()`, when `zvizvi/filament-column-filters` is installed |
+| `Column::createFilter(?object $stats = null)` | `Filter::createForColumn()`, when `zvizvi/filament-column-filters` is installed. Does nothing while its plugin is not registered on the panel |
 
 ```php
 TextColumn::make('id')->formatId('INV-');

@@ -103,6 +103,11 @@ final class Filter
      */
     public static function createForColumn(Column $column, ?object $stats = null, ?bool $searchable = false, ?Closure $customConfiguration = null, ?Closure $customFilterOptionConfiguration = null): Column
     {
+        // `columnFilter()` only exists once the column filter plugin is registered on a panel
+        if (! Column::hasMacro('columnFilter')) {
+            return $column;
+        }
+
         $columnName = $column->getName();
 
         if ($stats) {

@@ -144,7 +144,7 @@ abstract class KompactTable
         if (static::$showTimestamps) {
             $columns->push(...ColumnTimestamps::tableColumns(static::$showDeletedAt));
         }
-        if ($statsColumns && class_exists(ColumnFilter::class)) {
+        if ($statsColumns && Column::hasMacro('columnFilter')) {
             foreach ($columns as $column) {
                 /** @var Column $column */
                 Filter::createForColumn($column, $stats, customConfiguration: static::configureColumnFilter(...));
