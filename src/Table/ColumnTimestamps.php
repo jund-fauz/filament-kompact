@@ -12,13 +12,15 @@ class ColumnTimestamps
 {
     public static function tableColumns(bool $withDeletedAt = true): array
     {
+        $createdAtColumn = TextColumn::make('created_at')
+            ->dateTime('d-m-Y, H:i')
+            ->sortable()
+            ->toggleable();
+        if (class_exists(ColumnFilter::class)) {
+            $createdAtColumn->columnFilter(ColumnFilter::date());
+        }
         $columns = [
-            TextColumn::make('created_at')
-                ->dateTime('d-m-Y, H:i')
-                ->sortable()
-                ->toggleable()
-                ->columnFilter(ColumnFilter::date()),
-
+            $createdAtColumn,
             TextColumn::make('updated_at')
                 ->dateTime('d-m-Y, H:i')
                 ->sortable()

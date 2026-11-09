@@ -103,7 +103,7 @@ abstract class KompactTable
             $actions->unshift(static::withIconOnlyStyle(ViewAction::make())->extraAttributes(['style' => 'display:none']));
         }
 
-        return $actions->toArray();
+        return $actions->all();
     }
 
     /**
@@ -152,7 +152,7 @@ abstract class KompactTable
         }
 
         return $table
-            ->columns($columns->toArray())
+            ->columns($columns->all())
             ->persistInSession(static::$persistInSession)
             ->filters(static::getFilters())
             ->recordActions(static::getRecordActions())

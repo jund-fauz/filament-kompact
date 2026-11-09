@@ -13,7 +13,7 @@ class Format
             return '-';
         }
 
-        return BigDecimal::of($num)->toScale(3, RoundingMode::Ceiling) . ' gr';
+        return BigDecimal::of((string) $num)->toScale(3, RoundingMode::Ceiling) . ' gr';
     }
 
     public static function pcs(mixed $num): string

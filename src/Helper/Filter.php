@@ -42,7 +42,7 @@ final class Filter
     public static function getCount(string $modelClass, string|array ...$columns): Model
     {
         array_flat($columns);
-        $selects = collect();
+        $selects = collect([]);
         $relationalColumns = [];
 
         foreach ($columns as $column) {
@@ -167,7 +167,7 @@ final class Filter
                         ->distinct()
                         ->whereNotNull($relationColumn)
                         ->where($relationColumn, '!=', '')
-                        ->pluck($relationColumn, $relationColumn);
+                        ->pluck($relationColumn);
                 } else {
                     $tableName = (new $model)->getTable();
                     $nullable = Cache::remember("schema_nullable_$tableName", Convert::dayToSecond(15), function () use ($tableName) {
@@ -185,7 +185,7 @@ final class Filter
                         ->distinct()
                         ->whereNotNull($columnName)
                         ->whereNot($columnName, '')
-                        ->pluck($columnName, $columnName);
+                        ->pluck($columnName);
                 }
 
                 // Columns with the _enum suffix are cast from the model to enum objects,
@@ -193,6 +193,7 @@ final class Filter
                 $toScalar = fn ($item) => match (true) {
                     $item instanceof BackedEnum => $item->value,
                     $item instanceof UnitEnum => $item->name,
+                    is_float($item) => (string) $item,
                     default => $item,
                 };
 
@@ -204,8 +205,9 @@ final class Filter
                     default => $item
                 };
 
+                // Plucked as a list, because a float key would be truncated to an int.
                 $filterData = $filterData->mapWithKeys(
-                    fn ($label, $value) => [$toScalar($value) => $format($label)]
+                    fn ($value) => [$toScalar($value) => $format($value)]
                 );
 
                 if (isset($required) && $required) {
