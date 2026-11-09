@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-09
+
+### Fixed
+
+- `ColumnTimestamps`, `KompactTable` and `Filter::createForColumn()` (and so `Column::createFilter()`) check `Column::hasMacro('columnFilter')` instead of whether `zvizvi/filament-column-filters` is installed. Before, a table threw a `BadMethodCallException` when the package was installed but its plugin was not registered on the panel; now the column filters are left out.
+
+### Tests
+
+- Added tests for tables built without the column filter plugin.
+
 ## [0.1.0] - 2026-11-09
 
 First release.
@@ -33,5 +43,6 @@ First release.
 
 - Added tests for `KompactTable`, `ColumnTimestamps`, `Filter`, the macros and `Format`, and a GitHub Actions workflow on PHP 8.3–8.5 with Laravel 13.
 
-[Unreleased]: https://github.com/jund-fauz/filament-kompact/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/jund-fauz/filament-kompact/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/jund-fauz/filament-kompact/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/jund-fauz/filament-kompact/releases/tag/v0.1.0
