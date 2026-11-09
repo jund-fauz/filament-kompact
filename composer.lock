@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c57e16717a1a46e93311be07e800a5b0",
+    "content-hash": "0cb02f3e2fe5bd9edcdc1b976b8f3d05",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -2181,16 +2181,16 @@
         },
         {
             "name": "jund-fauz/eloquent-kompact",
-            "version": "v0.100.0",
+            "version": "v1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jund-fauz/eloquent-kompact.git",
-                "reference": "79c99d12ec71f21f2a66ec0bf34371650814376c"
+                "reference": "cdff3f1a756de9dd2a42751cbd8129ad00a0f89d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jund-fauz/eloquent-kompact/zipball/79c99d12ec71f21f2a66ec0bf34371650814376c",
-                "reference": "79c99d12ec71f21f2a66ec0bf34371650814376c",
+                "url": "https://api.github.com/repos/jund-fauz/eloquent-kompact/zipball/cdff3f1a756de9dd2a42751cbd8129ad00a0f89d",
+                "reference": "cdff3f1a756de9dd2a42751cbd8129ad00a0f89d",
                 "shasum": ""
             },
             "require": {
@@ -2234,9 +2234,9 @@
             "description": "A set of automation & helper tools to improve development experience and convenience in building app using Eloquent ORM by Laravel",
             "support": {
                 "issues": "https://github.com/jund-fauz/eloquent-kompact/issues",
-                "source": "https://github.com/jund-fauz/eloquent-kompact/tree/v0.100.0"
+                "source": "https://github.com/jund-fauz/eloquent-kompact/tree/v1.0.0"
             },
-            "time": "2026-11-09T03:52:19+00:00"
+            "time": "2026-11-09T08:51:25+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",

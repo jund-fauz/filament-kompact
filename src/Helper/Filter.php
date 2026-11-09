@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 use JundFauz\EloquentKompact\Builder\Str;
-use JundFauz\EloquentKompact\Column\Checker;
+use JundFauz\EloquentKompact\Column\ColumnCheck;
 use JundFauz\EloquentKompact\Column\Convert;
 use JundFauz\EloquentKompact\Query\RawQuery;
 use JundFauz\FilamentKompact\UI\Formatter\Format;
@@ -121,7 +121,7 @@ final class Filter
         $filter = ColumnFilter::select()
             ->searchable()
             ->options(function () use ($customFilterOptionConfiguration, $columnName, $column) {
-                if (Checker::isBoolean($columnName)) {
+                if (ColumnCheck::isBoolean($columnName)) {
                     return Convert::booleanToString($columnName);
                 }
 
@@ -203,10 +203,10 @@ final class Filter
                 };
 
                 $format = fn ($item) => match (true) {
-                    Checker::isGram($columnName) => Format::gram($item),
-                    Checker::isPcs($columnName) => Format::pcs($item),
-                    Checker::isPercentage($columnName) => Format::percentage($item),
-                    Checker::isEnum($columnName) => $toScalar($item),
+                    ColumnCheck::isGram($columnName) => Format::gram($item),
+                    ColumnCheck::isPcs($columnName) => Format::pcs($item),
+                    ColumnCheck::isPercentage($columnName) => Format::percentage($item),
+                    ColumnCheck::isEnum($columnName) => $toScalar($item),
                     default => $item
                 };
 
