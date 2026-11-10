@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-11-10
+
+### Fixed
+
+- `Repeater::minOneItem()` names the parameter of its delete-button closure `$component`, which Filament injects. Before, `$repeater` could not be resolved and rendering the delete button threw a `BindingResolutionException`, so the button of the last item was never hidden.
+
+### Tests
+
+- Added a test that the delete button of `minOneItem()` is hidden with one item and shown with two.
+
 ## [0.2.0] - 2026-11-09
 
 ### Changed
@@ -50,7 +60,8 @@ First release.
 
 - Added tests for `KompactTable`, `ColumnTimestamps`, `Filter`, the macros and `Format`, and a GitHub Actions workflow on PHP 8.3–8.5 with Laravel 13.
 
-[Unreleased]: https://github.com/jund-fauz/filament-kompact/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/jund-fauz/filament-kompact/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/jund-fauz/filament-kompact/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/jund-fauz/filament-kompact/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/jund-fauz/filament-kompact/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/jund-fauz/filament-kompact/releases/tag/v0.1.0
