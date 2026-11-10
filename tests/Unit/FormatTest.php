@@ -35,13 +35,32 @@ class FormatTest extends TestCase
         $this->assertSame('12.000 gr', Format::gram(12));
         $this->assertSame('1.235 gr', Format::gram('1.2341'));
         $this->assertSame('0.500 gr', Format::gram(0.5));
+        $this->assertSame('0.001 gr', Format::gram('0.0001'));
+    }
+
+    public static function zeroValues(): array
+    {
+        return [
+            'int' => [0],
+            'float' => [0.0],
+            'string' => ['0'],
+            'decimal string' => ['0.000'],
+        ];
     }
 
     #[Test]
-    public function gram_keeps_zero(): void
+    #[DataProvider('zeroValues')]
+    public function gram_pcs_and_percentage_return_a_dash_for_zero(mixed $value): void
     {
-        $this->assertSame('0.000 gr', Format::gram(0));
-        $this->assertSame('0.000 gr', Format::gram('0'));
+        $this->assertSame('-', Format::gram($value));
+        $this->assertSame('-', Format::pcs($value));
+        $this->assertSame('-', Format::percentage($value));
+    }
+
+    #[Test]
+    public function carat_keeps_zero(): void
+    {
+        $this->assertSame('0 K', Format::carat(0));
     }
 
     #[Test]
@@ -49,7 +68,6 @@ class FormatTest extends TestCase
     {
         $this->assertSame('1,234,567 pcs', Format::pcs(1234567));
         $this->assertSame('12 pcs', Format::pcs('12.9'));
-        $this->assertSame('0 pcs', Format::pcs(0));
     }
 
     #[Test]

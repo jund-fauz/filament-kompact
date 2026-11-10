@@ -35,7 +35,7 @@ public function panel(Panel $panel): Panel
 
 ## Versioning
 
-This package follows [Semantic Versioning](https://semver.org). It is still in initial development (`0.x`): a minor release (`0.x.0`) may contain breaking changes, while a patch release (`0.x.y`) never does. Composer's `^0.x` constraint only allows patch updates, so require it as e.g. `^0.2`. The API is considered stable from `1.0.0`.
+This package follows [Semantic Versioning](https://semver.org). It is still in initial development (`0.x`): a minor release (`0.x.0`) may contain breaking changes, while a patch release (`0.x.y`) never does. Composer's `^0.x` constraint only allows patch updates, so require it as e.g. `^0.3`. The API is considered stable from `1.0.0`.
 
 Classes and methods marked `@internal` are not covered by this promise and may change in any release.
 
@@ -197,7 +197,7 @@ TextColumn::make('code')->formatId('P-', 5); // 42 → P-00042
 
 ## Format
 
-Every formatter returns `-` for a blank value.
+Every formatter returns `-` for a blank value. `gram()`, `pcs()` and `percentage()` also return `-` for `0`.
 
 | Method | Example |
 |---|---|
