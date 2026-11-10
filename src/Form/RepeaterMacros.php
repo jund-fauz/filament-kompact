@@ -17,7 +17,7 @@ final class RepeaterMacros extends Repeater
                 ->defaultItems(1)
                 ->minItems(1)
                 ->deleteAction(fn (Action $action) => $action->extraAttributes(
-                    fn (Repeater $repeater) => count($repeater->getState() ?? []) <= 1
+                    fn (Repeater $component) => count($component->getState() ?? []) <= 1
                         ? [
                             'style' => 'visibility: hidden;',
                             'tabindex' => '-1',

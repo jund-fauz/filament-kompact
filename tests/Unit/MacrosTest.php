@@ -3,6 +3,7 @@
 namespace JundFauz\FilamentKompact\Tests\Unit;
 
 use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\Column;
@@ -10,6 +11,7 @@ use Filament\Tables\Columns\TextColumn;
 use JundFauz\FilamentKompact\FilamentKompactServiceProvider;
 use JundFauz\FilamentKompact\Macros;
 use JundFauz\FilamentKompact\Table\TextColumnMacros;
+use JundFauz\FilamentKompact\Tests\Fixtures\FormComponent;
 use JundFauz\FilamentKompact\Tests\Fixtures\TableComponent;
 use JundFauz\FilamentKompact\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
@@ -86,6 +88,25 @@ class MacrosTest extends TestCase
         $repeater = Repeater::make('items')->minOneItem();
 
         $this->assertSame(1, $repeater->getMinItems());
+    }
+
+    #[Test]
+    public function repeater_min_one_item_hides_the_delete_button_of_the_last_item(): void
+    {
+        $livewire = new FormComponent();
+        $repeater = Repeater::make('items')->schema([TextInput::make('name')])->minOneItem();
+        Schema::make($livewire)->statePath('data')->components([$repeater])->getComponents();
+
+        $livewire->data = ['items' => ['a' => ['name' => 'Apple']]];
+
+        $this->assertSame(
+            ['style' => 'visibility: hidden;', 'tabindex' => '-1', 'aria-hidden' => 'true'],
+            $repeater->getAction('delete')->getExtraAttributes(),
+        );
+
+        $livewire->data = ['items' => ['a' => ['name' => 'Apple'], 'b' => ['name' => 'Bread']]];
+
+        $this->assertSame([], $repeater->getAction('delete')->getExtraAttributes());
     }
 
     #[Test]
