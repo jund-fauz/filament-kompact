@@ -26,15 +26,20 @@
         "brick/math": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^13.4",
+        "phpunit/phpunit": "^13.0",
         "zvizvi/filament-column-filters": "^0.0.6",
-        "orchestra/testbench": "^11.3"
+        "orchestra/testbench": "^11.3",
+        "orchestra/testbench-dusk": "~11.5.0"
     },
     "suggest": {
         "zvizvi/filament-column-filters": "Required for the createFilter() column macro"
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "phpunit",
+        "test:unit": "phpunit --testsuite Unit",
+        "test:feature": "phpunit --testsuite Feature",
+        "test:livewire": "phpunit --testsuite Livewire",
+        "test:browser": "phpunit -c phpunit.dusk.xml"
     },
     "extra": {
         "laravel": {

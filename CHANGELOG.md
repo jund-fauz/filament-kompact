@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Tests
+
+- Added Feature tests (a Filament panel requested over HTTP), Livewire tests (`Livewire::test()` on the resource pages) and browser tests (Laravel Dusk, local only) that use every macro and helper in a `ProductResource`.
+- Added Unit tests for `KompactTable::configureColumnFilter()`, `getModifiedQuery()` and `$persistInSession`, and for the `_pcs`, `_percentage` and `_enum` options and the `HasMany` and other relations of `Filter::createForColumn()`.
+- Added the scripts `test:unit`, `test:feature`, `test:livewire` and `test:browser`.
+- Added `orchestra/testbench-dusk` `~11.5.0` as a dev dependency. It requires `orchestra/testbench-core` 11.5, which conflicts with PHPUnit 13.4+, so the dev constraint of PHPUnit is `^13.0` (13.3) until `orchestra/testbench` 11.4 is released.
+
 ## [0.2.1] - 2026-11-10
 
 ### Fixed

@@ -210,8 +210,16 @@ Every formatter returns `-` for a blank value.
 ## Testing
 
 ```bash
-composer test
+composer test           # Unit, Feature and Livewire, as in CI
+composer test:unit      # macros and helpers on their own
+composer test:feature   # pages of a Filament panel requested over HTTP
+composer test:livewire  # pages of a Filament panel driven with Livewire::test()
+composer test:browser   # the same panel in Chrome with Laravel Dusk, local only
 ```
+
+The Feature, Livewire and Browser tests run a Filament panel with a `ProductResource` (`tests/Fixtures/Filament`) that uses every macro and helper of the package.
+
+The browser tests need Google Chrome and a matching ChromeDriver, installed with `vendor/bin/dusk-updater detect --auto-update`. They run headless; set `DUSK_HEADED=1` to watch them. They are not run in CI.
 
 ## License
 

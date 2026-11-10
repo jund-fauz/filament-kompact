@@ -4,6 +4,7 @@ namespace JundFauz\FilamentKompact\Tests\Unit;
 
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
+use Filament\Tables\Columns\Column;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use JundFauz\FilamentKompact\Tests\Fixtures\Product;
@@ -12,6 +13,7 @@ use JundFauz\FilamentKompact\Tests\Fixtures\TableComponent;
 use JundFauz\FilamentKompact\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 use Zvizvi\FilamentColumnFilters\FilamentColumnFilters;
+use Zvizvi\FilamentColumnFilters\Filters\ColumnFilter;
 
 class KompactTableTest extends TestCase
 {
@@ -22,11 +24,67 @@ class KompactTableTest extends TestCase
         $this->createProductsTable();
         Product::create(['name' => 'Apple', 'brand' => null]);
 
-        ProductTable::$columnStats = [];
-        ProductTable::$iconOnly = true;
-        ProductTable::$timestamps = true;
-        ProductTable::$deletedAt = true;
-        ProductTable::$viewAction = true;
+        ProductTable::reset();
+    }
+
+    protected function tearDown(): void
+    {
+        ProductTable::reset();
+
+        parent::tearDown();
+    }
+
+    #[Test]
+    public function it_persists_filters_sort_and_search_in_the_session_by_default(): void
+    {
+        $table = $this->table();
+
+        $this->assertTrue($table->persistsFiltersInSession());
+        $this->assertTrue($table->persistsSortInSession());
+        $this->assertTrue($table->persistsSearchInSession());
+
+        ProductTable::$persist = false;
+        $table = $this->table();
+
+        $this->assertFalse($table->persistsFiltersInSession());
+        $this->assertFalse($table->persistsSortInSession());
+        $this->assertFalse($table->persistsSearchInSession());
+    }
+
+    #[Test]
+    public function configure_column_filter_runs_on_each_column_filter(): void
+    {
+        ProductTable::$columnStats = ['name'];
+        $columns = [];
+        ProductTable::$columnFilterHook = function (ColumnFilter $filter, Column $column) use (&$columns) {
+            $columns[] = $column->getName();
+            $filter->multiple();
+        };
+
+        $table = $this->table();
+
+        $this->assertSame(['name'], $columns);
+        $this->assertTrue(FilamentColumnFilters::getColumnFilter($table->getColumns()['name'])->isMultiple());
+    }
+
+    #[Test]
+    public function get_modified_query_changes_the_query_of_the_table(): void
+    {
+        Product::create(['name' => 'Bread']);
+
+        $this->assertSame(['Apple', 'Bread'], $this->table()->getQuery()->pluck('name')->all());
+
+        ProductTable::$queryHook = fn ($query) => $query->where('name', 'Bread');
+
+        $this->assertSame(['Bread'], $this->table()->getQuery()->pluck('name')->all());
+    }
+
+    #[Test]
+    public function the_default_modified_query_leaves_the_query_unchanged(): void
+    {
+        $query = Product::query();
+
+        $this->assertSame($query, (fn () => static::getModifiedQuery())->bindTo(null, ProductTable::class)()($query));
     }
 
     private function table(): Table

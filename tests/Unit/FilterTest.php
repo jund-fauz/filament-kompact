@@ -5,10 +5,14 @@ namespace JundFauz\FilamentKompact\Tests\Unit;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
 use JundFauz\FilamentKompact\Helper\Filter;
 use JundFauz\FilamentKompact\Tests\Fixtures\Category;
 use JundFauz\FilamentKompact\Tests\Fixtures\Product;
+use JundFauz\FilamentKompact\Tests\Fixtures\ProductStatus;
+use JundFauz\FilamentKompact\Tests\Fixtures\Tag;
 use JundFauz\FilamentKompact\Tests\Fixtures\TableComponent;
 use JundFauz\FilamentKompact\Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
@@ -30,10 +34,21 @@ class FilterTest extends TestCase
         $drink = Category::create(['name' => 'Drink']);
         Category::create(['name' => 'Unused']);
 
-        Product::create(['name' => 'Apple', 'brand' => 'Acme', 'category_id' => $food->id, 'active_is' => true, 'weight_gram' => '150.5']);
-        Product::create(['name' => 'Bread', 'brand' => 'Acme', 'category_id' => $food->id, 'weight_gram' => '500']);
+        $apple = Product::create(['name' => 'Apple', 'brand' => 'Acme', 'category_id' => $food->id, 'active_is' => true, 'weight_gram' => '150.5', 'stock_pcs' => 1200, 'tax_percentage' => '11.00', 'status_enum' => ProductStatus::Published]);
+        Product::create(['name' => 'Bread', 'brand' => 'Acme', 'category_id' => $food->id, 'weight_gram' => '500', 'status_enum' => ProductStatus::Draft]);
         Product::create(['name' => 'Cola', 'brand' => '', 'category_id' => $drink->id]);
         Product::create(['name' => 'Water', 'brand' => null]);
+
+        Schema::create('tags', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+        });
+        Schema::create('product_tag', function (Blueprint $table) {
+            $table->foreignId('product_id');
+            $table->foreignId('tag_id');
+        });
+        $apple->tags()->create(['name' => 'Fresh']);
+        Tag::create(['name' => 'Frozen']);
     }
 
     protected function tearDown(): void
@@ -44,10 +59,10 @@ class FilterTest extends TestCase
         parent::tearDown();
     }
 
-    private function column(string $name): TextColumn
+    private function column(string $name, string $model = Product::class): TextColumn
     {
         return TextColumn::make($name)->table(
-            Table::make(new TableComponent())->query(Product::query())
+            Table::make(new TableComponent())->query($model::query())
         );
     }
 
@@ -139,6 +154,53 @@ class FilterTest extends TestCase
         ksort($options);
 
         $this->assertSame(['Drink' => 'Drink', 'Food' => 'Food'], $options);
+    }
+
+    #[Test]
+    public function create_for_column_leaves_blank_values_out_of_a_required_column(): void
+    {
+        $column = Filter::createForColumn($this->column('name'));
+
+        $this->assertSame(['Apple' => 'Apple', 'Bread' => 'Bread', 'Cola' => 'Cola', 'Water' => 'Water'], $this->filterOptions($column));
+    }
+
+    #[Test]
+    public function create_for_column_formats_a_pcs_column(): void
+    {
+        $this->assertSame(['1200' => '1,200 pcs'], $this->filterOptions(Filter::createForColumn($this->column('stock_pcs'))));
+    }
+
+    #[Test]
+    public function create_for_column_formats_a_percentage_column(): void
+    {
+        $this->assertSame(['11' => '11%'], $this->filterOptions(Filter::createForColumn($this->column('tax_percentage'))));
+    }
+
+    #[Test]
+    public function create_for_column_uses_the_value_of_an_enum_column(): void
+    {
+        $options = $this->filterOptions(Filter::createForColumn($this->column('status_enum')));
+        ksort($options);
+
+        $this->assertSame(['draft' => 'draft', 'published' => 'published'], $options);
+    }
+
+    #[Test]
+    public function create_for_column_lists_the_values_of_a_has_many_relation_that_are_in_use(): void
+    {
+        $options = $this->filterOptions(Filter::createForColumn($this->column('products.name', Category::class)));
+        ksort($options);
+
+        $this->assertSame(['Apple' => 'Apple', 'Bread' => 'Bread', 'Cola' => 'Cola'], $options);
+    }
+
+    #[Test]
+    public function create_for_column_lists_every_value_of_another_relation(): void
+    {
+        $options = $this->filterOptions(Filter::createForColumn($this->column('tags.name')));
+        ksort($options);
+
+        $this->assertSame(['Fresh' => 'Fresh', 'Frozen' => 'Frozen'], $options);
     }
 
     #[Test]

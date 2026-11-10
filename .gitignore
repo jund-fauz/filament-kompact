@@ -1,3 +1,7 @@
 /vendor/
 .idea
 .phpunit.cache
+/tests/Browser/database.sqlite
+/tests/Browser/screenshots/
+/tests/Browser/console/
+/tests/Browser/source/
