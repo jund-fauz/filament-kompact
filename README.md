@@ -6,7 +6,7 @@ A set of helper functions and macros in building app using Filament in Laravel. 
 composer require jund-fauz/filament-kompact
 ```
 
-Requires PHP 8.3+, Laravel 13, Filament 5 and Eloquent Kompact 1.x. The service provider is registered through package discovery.
+Requires PHP 8.3+, Laravel 13, Filament 5 and Eloquent Kompact 1.4+. The service provider is registered through package discovery.
 
 The column filters need [`zvizvi/filament-column-filters`](https://github.com/zvizvi/filament-column-filters). It is optional: without it, or while its plugin is not registered on the panel, columns get no filter.
 

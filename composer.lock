@@ -2181,16 +2181,16 @@
         },
         {
             "name": "jund-fauz/eloquent-kompact",
-            "version": "v1.0.0",
+            "version": "v1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jund-fauz/eloquent-kompact.git",
-                "reference": "cdff3f1a756de9dd2a42751cbd8129ad00a0f89d"
+                "reference": "487e8d05bc1a1f1b3e800878ab3ec75fb5e53271"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jund-fauz/eloquent-kompact/zipball/cdff3f1a756de9dd2a42751cbd8129ad00a0f89d",
-                "reference": "cdff3f1a756de9dd2a42751cbd8129ad00a0f89d",
+                "url": "https://api.github.com/repos/jund-fauz/eloquent-kompact/zipball/487e8d05bc1a1f1b3e800878ab3ec75fb5e53271",
+                "reference": "487e8d05bc1a1f1b3e800878ab3ec75fb5e53271",
                 "shasum": ""
             },
             "require": {
@@ -2234,9 +2234,9 @@
             "description": "A set of automation & helper tools to improve development experience and convenience in building app using Eloquent ORM by Laravel",
             "support": {
                 "issues": "https://github.com/jund-fauz/eloquent-kompact/issues",
-                "source": "https://github.com/jund-fauz/eloquent-kompact/tree/v1.0.0"
+                "source": "https://github.com/jund-fauz/eloquent-kompact/tree/v1.5.0"
             },
-            "time": "2026-11-09T08:51:25+00:00"
+            "time": "2026-11-11T03:24:14+00:00"
         },
         {
             "name": "kirschbaum-development/eloquent-power-joins",

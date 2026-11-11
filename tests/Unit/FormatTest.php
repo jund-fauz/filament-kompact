@@ -58,6 +58,13 @@ class FormatTest extends TestCase
     }
 
     #[Test]
+    public function pcs_and_percentage_take_a_non_numeric_string(): void
+    {
+        $this->assertSame('0 pcs', Format::pcs('abc'));
+        $this->assertSame('abc%', Format::percentage('abc'));
+    }
+
+    #[Test]
     public function carat_keeps_zero(): void
     {
         $this->assertSame('0 K', Format::carat(0));
