@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-11-11
+
+### Changed
+
+- Requires Eloquent Kompact `^1.4.0` instead of `^1.0.0`.
+
+### Fixed
+
+- `Format::pcs()` and `Format::percentage()` take a non-numeric string again (`'abc'` gives `0 pcs` and `abc%`), as before `0.3.0`. In `0.3.0` it threw a `TypeError` from Eloquent Kompact's `is_zero()`, which accepts any value since Eloquent Kompact `1.4.0`.
+
+### Tests
+
+- Added a test for a non-numeric string in `Format::pcs()` and `Format::percentage()`.
+
 ## [0.3.0] - 2026-11-10
 
 ### Changed
@@ -74,7 +88,8 @@ First release.
 
 - Added tests for `KompactTable`, `ColumnTimestamps`, `Filter`, the macros and `Format`, and a GitHub Actions workflow on PHP 8.3–8.5 with Laravel 13.
 
-[Unreleased]: https://github.com/jund-fauz/filament-kompact/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/jund-fauz/filament-kompact/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/jund-fauz/filament-kompact/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/jund-fauz/filament-kompact/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/jund-fauz/filament-kompact/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/jund-fauz/filament-kompact/compare/v0.1.1...v0.2.0
