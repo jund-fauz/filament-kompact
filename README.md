@@ -25,6 +25,7 @@ public function panel(Panel $panel): Panel
 }
 ```
 
+- [Background](#background)
 - [Versioning](#versioning)
 - [KompactTable](#kompacttable)
 - [Timestamp columns](#timestamp-columns)
@@ -32,6 +33,22 @@ public function panel(Panel $panel): Panel
 - [Macros](#macros)
 - [Format](#format)
 - [Testing](#testing)
+
+## Background
+
+Filament Kompact is the second layer extracted from the same Laravel + Filament ERP that produced [Eloquent Kompact](https://github.com/jund-fauz/eloquent-kompact). Once the models followed the column naming convention, the Filament tables built on top of them started repeating too: the same timestamp columns, the same filters and the same formatting in every resource. `KompactTable` and the macros here turn those repeated table definitions into defaults derived from the same convention.
+
+Design decisions:
+
+- **Build on the convention, don't duplicate it.** Column behavior comes from Eloquent Kompact instead of being detected a second time.
+- **Optional integrations degrade quietly.** Column filters use `zvizvi/filament-column-filters` when it is installed and registered; without it, columns simply get no filter.
+- **Honest versioning.** Still `0.x`: minor releases may break until `1.0.0`, as described in [Versioning](#versioning).
+
+Where it is used: the table and filter layer of the production ERP it was extracted from.
+
+Scope: this package contains generic tooling only. It holds no business rules, data or credentials from any project that uses it.
+
+Timeline (from the git history): repository created on 2026-11-07, first release `0.1.0` on 2026-11-09, `0.3.1` on 2026-11-11.
 
 ## Versioning
 
