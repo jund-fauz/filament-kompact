@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-11-16
+
+### Changed
+
+- **Breaking:** requires Eloquent Kompact `^2.0.0` instead of `^1.4.0`. An app that requires Eloquent Kompact `1.x` itself has to upgrade it too, see its [upgrade guide](https://github.com/jund-fauz/eloquent-kompact/blob/main/UPGRADE.md) (e.g. the array helpers moved to the `JundFauz\EloquentKompact\Array` namespace).
+- **Breaking:** `Format::gram()`, `Format::pcs()` and `Format::percentage()` return `-` for a non-numeric string, like for `0`. Before, `Format::pcs('abc')` gave `0 pcs`, `Format::percentage('abc')` gave `abc%` and `Format::gram('abc')` threw a `NumberFormatException`. They check for zero with `same_with($num, 0.0, 'float')`, because Eloquent Kompact `2.0` removed `is_zero()`.
+- `Filter::getCount()` uses `Array\flat()`, the new name of Eloquent Kompact's `array_flat()`.
+
+### Tests
+
+- Replaced the test for a non-numeric string in `Format::pcs()` and `Format::percentage()` by one that expects `-` from `gram()`, `pcs()` and `percentage()`.
+
 ## [0.3.1] - 2026-11-11
 
 ### Changed
@@ -88,7 +100,8 @@ First release.
 
 - Added tests for `KompactTable`, `ColumnTimestamps`, `Filter`, the macros and `Format`, and a GitHub Actions workflow on PHP 8.3–8.5 with Laravel 13.
 
-[Unreleased]: https://github.com/jund-fauz/filament-kompact/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/jund-fauz/filament-kompact/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/jund-fauz/filament-kompact/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/jund-fauz/filament-kompact/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/jund-fauz/filament-kompact/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/jund-fauz/filament-kompact/compare/v0.2.0...v0.2.1
