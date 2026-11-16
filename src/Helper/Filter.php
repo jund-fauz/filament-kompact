@@ -20,7 +20,7 @@ use JundFauz\EloquentKompact\Query\RawQuery;
 use JundFauz\FilamentKompact\UI\Formatter\Format;
 use UnitEnum;
 use Zvizvi\FilamentColumnFilters\Filters\ColumnFilter;
-use function JundFauz\EloquentKompact\array_flat;
+use function JundFauz\EloquentKompact\Array\flat;
 use function JundFauz\EloquentKompact\collect;
 use function JundFauz\EloquentKompact\is_not_null;
 use function JundFauz\EloquentKompact\not_in_array;
@@ -41,7 +41,7 @@ final class Filter
      */
     public static function getCount(string $modelClass, string|array ...$columns): Model
     {
-        array_flat($columns);
+        flat($columns);
         $selects = collect([]);
         $relationalColumns = [];
 

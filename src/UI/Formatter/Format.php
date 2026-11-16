@@ -4,13 +4,13 @@ namespace JundFauz\FilamentKompact\UI\Formatter;
 
 use Brick\Math\BigDecimal;
 use Brick\Math\RoundingMode;
-use function JundFauz\EloquentKompact\is_zero;
+use function JundFauz\EloquentKompact\same_with;
 
 class Format
 {
     public static function gram(mixed $num): string
     {
-        if (blank($num) || is_zero($num)) {
+        if (blank($num) || same_with($num, 0.0, 'float')) {
             return '-';
         }
 
@@ -19,7 +19,7 @@ class Format
 
     public static function pcs(mixed $num): string
     {
-        if (blank($num) || is_zero($num)) {
+        if (blank($num) || same_with($num, 0.0, 'float')) {
             return '-';
         }
 
@@ -28,7 +28,7 @@ class Format
 
     public static function percentage(mixed $num): string
     {
-        if (blank($num) || is_zero($num)) {
+        if (blank($num) || same_with($num, 0.0, 'float')) {
             return '-';
         }
 

@@ -58,10 +58,11 @@ class FormatTest extends TestCase
     }
 
     #[Test]
-    public function pcs_and_percentage_take_a_non_numeric_string(): void
+    public function gram_pcs_and_percentage_return_a_dash_for_a_non_numeric_string(): void
     {
-        $this->assertSame('0 pcs', Format::pcs('abc'));
-        $this->assertSame('abc%', Format::percentage('abc'));
+        $this->assertSame('-', Format::gram('abc'));
+        $this->assertSame('-', Format::pcs('abc'));
+        $this->assertSame('-', Format::percentage('abc'));
     }
 
     #[Test]

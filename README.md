@@ -6,7 +6,7 @@ A set of helper functions and macros in building app using Filament in Laravel. 
 composer require jund-fauz/filament-kompact
 ```
 
-Requires PHP 8.3+, Laravel 13, Filament 5 and Eloquent Kompact 1.4+. The service provider is registered through package discovery.
+Requires PHP 8.3+, Laravel 13, Filament 5 and Eloquent Kompact 2.0+. The service provider is registered through package discovery.
 
 The column filters need [`zvizvi/filament-column-filters`](https://github.com/zvizvi/filament-column-filters). It is optional: without it, or while its plugin is not registered on the panel, columns get no filter.
 
@@ -35,7 +35,7 @@ public function panel(Panel $panel): Panel
 
 ## Versioning
 
-This package follows [Semantic Versioning](https://semver.org). It is still in initial development (`0.x`): a minor release (`0.x.0`) may contain breaking changes, while a patch release (`0.x.y`) never does. Composer's `^0.x` constraint only allows patch updates, so require it as e.g. `^0.3`. The API is considered stable from `1.0.0`.
+This package follows [Semantic Versioning](https://semver.org). It is still in initial development (`0.x`): a minor release (`0.x.0`) may contain breaking changes, while a patch release (`0.x.y`) never does. Composer's `^0.x` constraint only allows patch updates, so require it as e.g. `^0.4`. The API is considered stable from `1.0.0`.
 
 Classes and methods marked `@internal` are not covered by this promise and may change in any release.
 
@@ -197,7 +197,7 @@ TextColumn::make('code')->formatId('P-', 5); // 42 → P-00042
 
 ## Format
 
-Every formatter returns `-` for a blank value. `gram()`, `pcs()` and `percentage()` also return `-` for `0`.
+Every formatter returns `-` for a blank value. `gram()`, `pcs()` and `percentage()` also return `-` for `0` and for a non-numeric string.
 
 | Method | Example |
 |---|---|
